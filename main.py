@@ -22,13 +22,13 @@ print(training_set.data)
 print(training_set.target)
 
 # Specify that all features have real-value data
-feature_name = "car_features"
+feature_name = "cereal_features"
 feature_columns = [tf.feature_column.numeric_column(feature_name,
-                                                    shape=[3])]
+                                                    shape=[2])]
 classifier = tf.estimator.LinearClassifier(
     feature_columns=feature_columns,
-    n_classes=3,
-    model_dir="/tmp/car_model")
+    n_classes=7,
+    model_dir="/tmp/cereal_model")
 
 def input_fn(dataset):
     def _fn():
@@ -44,13 +44,13 @@ print('fit done')
 
 # Evaluate accuracy.
 accuracy_score = classifier.evaluate(input_fn=input_fn(test_set),
-                                     steps=10)["accuracy"]
+                                     steps=100)["accuracy"]
 print('\nAccuracy: {0:f}'.format(accuracy_score))
 
 # Export the model for serving
-feature_spec = {'car_features': tf.FixedLenFeature(shape=[3], dtype=np.float32)}
+feature_spec = {'cereal_features': tf.FixedLenFeature(shape=[2], dtype=np.float32)}
 
 serving_fn = tf.estimator.export.build_parsing_serving_input_receiver_fn(feature_spec)
 
-classifier.export_savedmodel(export_dir_base='/tmp/car_model' + '/export',
+classifier.export_savedmodel(export_dir_base='/tmp/cereal_model' + '/export',
                             serving_input_receiver_fn=serving_fn)
