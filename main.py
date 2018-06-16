@@ -1,10 +1,16 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+import argparse
+import os
+import sys
 import tensorflow as tf
 import numpy as np
-
 print(tf.__version__)
 
 from tensorflow.contrib.learn.python.learn.datasets import base
 
+x1
 # Data files
 IRIS_TRAINING = "training.csv"
 IRIS_TEST = "test.csv"
